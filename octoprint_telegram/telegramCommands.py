@@ -1,6 +1,7 @@
 from __future__ import absolute_import
 import logging, sarge, hashlib, datetime,time,operator
 import octoprint.filemanager
+import RPi.GPIO as GPIO
 from flask.ext.babel import gettext
 from .telegramNotifications import telegramMsgDict
 
@@ -39,13 +40,28 @@ class TCMD():
 			'/con': 		{'cmd': self.cmdConnection, 'param': True},
 			'/user': 		{'cmd': self.cmdUser},
 			'/tune':		{'cmd': self.cmdTune, 'param': True},
-			'/help':  		{'cmd': self.cmdHelp, 'bind_none': True}
+			'/help':  		{'cmd': self.cmdHelp, 'bind_none': True},
+			'/on':                  {'cmd': self.cmdOn, 'bind_none': True},
+                        '/off':                 {'cmd': self.cmdOff, 'bind_none': True}
 		}
 		
 
 ############################################################################################
 # COMMAND HANDLERS
 ############################################################################################
+	cmdOn(self,chat_id,from_id,cmd,parameter):
+		self.main.send_msg(gettext("Printer Plugged!"))
+		GPIO.output(7,GPIO.HIGH),
+		GPIO.setmode(GPIO.BOARD),
+		GPIO.setup(7, GPIO.OUT),
+	       
+############################################################################################
+	def cmdOff(self,chat_id,from_id,cmd,parameter):
+		self.main.send_msg(gettext("Printer Unplugged!"))
+		GPIO.setmode(GPIO.BOARD),
+		GPIO.setup(7, GPIO.OUT),
+		GPIO.output(7,GPIO.LOW),
+		GPIO.cleanup(),
 	def cmdYes(self,chat_id,from_id,cmd,parameter):
 		self.main.send_msg(gettext("Alright."),chatID=chat_id, msg_id = self.main.getUpdateMsgId(chat_id),inline=False)
 ############################################################################################
