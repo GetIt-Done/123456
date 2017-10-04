@@ -526,6 +526,7 @@ class TelegramPlugin(octoprint.plugin.EventHandlerPlugin,
 		# 1.3.3 : 2
 		# 1.4.0 : 3
 		# 1.4.1 : 3
+		# 1.4.3 : 4
 
 	def get_settings_defaults(self):
 		return dict(
