@@ -520,7 +520,7 @@ class TelegramPlugin(octoprint.plugin.EventHandlerPlugin,
 ##########
 
 	def get_settings_version(self):
-		return 4
+		return 5
 		# Settings version numbers used in releases
 		# < 1.3.0: no settings versioning
 		# 1.3.0 : 1
@@ -531,6 +531,7 @@ class TelegramPlugin(octoprint.plugin.EventHandlerPlugin,
 		# 1.4.1 : 3
 		# 1.4.2 : 3
 		# 1.4.3 : 4
+		# 1.4.4 : 5
 
 	def get_settings_defaults(self):
 		return dict(
